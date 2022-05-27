@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Array;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,6 +70,28 @@ class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList get_all()
+    {
+        ArrayList arr = new ArrayList();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cur = db.rawQuery("SELECT * FROM SplitBillMain",null);
+
+        if(cur.moveToFirst())
+            do{
+                arr.add(cur.getString(0));
+                arr.add(cur.getInt(1));
+                arr.add(cur.getInt(2));
+
+            }while(cur.moveToNext());
+
+        cur.close();
+        db.close();
+
+        return arr;
+
+    }
+
     // to get the max id of MAIN TABLE
     public int get_last_entered_id_main()
     {
@@ -85,6 +108,18 @@ class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
         return final_id;
     }
+
+    public void delete_row(int id)
+    {
+        delete_table_friends(id);
+        delete_table_activities(id);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("SplitBillMain","id="+id,null);
+
+        db.close();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //      FOR FRIENDS TABLES      //
@@ -178,14 +213,39 @@ class DataBaseHandler extends SQLiteOpenHelper {
 
         Cursor data = db.rawQuery("Select friend_Name,Paid,Spent from friends_"+table_id,null);
 
-        int i=0;
+
         if(data.moveToFirst())
             do{
-                arr.add(data.getString((i)));
-                i++;
+                arr.add(data.getString(0));
+                arr.add(data.getInt(1));
+                arr.add(data.getInt(2));
+
             }while(data.moveToNext());
 
+            data.close();
             return arr;
+    }
+
+    public void inc_to_giver(int give_id,int settle_amt,int table_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE friends_"+table_id+
+                        " SET Paid = (Paid+"+settle_amt+") "+
+                "WHERE id="+give_id;
+
+        db.execSQL(query);
+        db.close();
+    }
+
+    public void dec_from_taker(int take_id,int settle_amt,int table_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE friends_"+table_id+
+                " SET Spent = (Spent-"+settle_amt+") "+
+                "WHERE id="+take_id;
+
+        db.execSQL(query);
+        db.close();
     }
 
     // create FRIEND table as friends_id
@@ -201,6 +261,13 @@ class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_FRIENDS_TABLE);
         new_entry_Friends_table(id,arr);
 
+        db.close();
+    }
+
+    public void delete_table_friends(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS friends_"+id);
         db.close();
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,4 +404,13 @@ class DataBaseHandler extends SQLiteOpenHelper {
 
             return arr;
     }
+
+    public void delete_table_activities(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS activities_"+id);
+        db.close();
+    }
+
+
 }

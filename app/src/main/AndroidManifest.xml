@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SPLITBILL2">
         <activity
+            android:name=".Bills_from_act_page"
+            android:exported="false" />
+        <activity
             android:name=".status_from_act_page"
             android:exported="false" />
         <activity

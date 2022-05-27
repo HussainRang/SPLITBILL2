@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class Activities_page extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -28,6 +30,9 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     int max_id;
     String Date;
     String Time;
+    String Group_name;
+
+    TextView Main_group_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,26 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
 
         in = getIntent();
         id = in.getIntExtra("ID",0);
+        Group_name = in.getStringExtra("Group_name");
+
+        Main_group_name = findViewById(R.id.Grp_name_act_page);
+        Main_group_name.setText(Group_name);
+        Main_group_name.setAllCaps(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DataBaseHandler dbh = new DataBaseHandler(this);
+        ArrayList arr = dbh.get_friend_table_name_pay_spent(id);
+        int i=0;
+        Toast.makeText(this, "Dekh Le", Toast.LENGTH_SHORT).show();
+        while(i<arr.size())
+        {
+            Toast.makeText(this, ""+arr.get(i), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+            i++;
+        }
     }
 
     @Override
@@ -187,6 +212,16 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     public void status_pressed_activity(View view) {
         Intent status = new Intent(this,status_from_act_page.class);
         status.putExtra("Table_id",id);
+        status.putExtra("Group_name",Group_name);
         startActivity(status);
+    }
+
+    public void Bills_pressed_activity(View view) {
+
+        Intent Bills = new Intent(this,Bills_from_act_page.class);
+        Bills.putExtra("Table_id",id);
+        Bills.putExtra("Group_name",Group_name);
+        startActivity(Bills);
+
     }
 }
