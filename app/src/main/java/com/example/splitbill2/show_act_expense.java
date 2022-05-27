@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -44,13 +45,14 @@ public class show_act_expense extends AppCompatActivity {
 
 
         act_name.setText(activity_name);
+        act_name.setAllCaps(true);
         show_expenses();
     }
 
     private void show_expenses()
     {
         ArrayList frnd_names = dbh.get_friends_name(table_id);
-        ArrayList pay_spent = dbh.send_row_activity(table_id,row_id);
+        ArrayList pay_spent = dbh.send_row_activity(table_id,row_id,frnd_names.size());
 
         int frnd_index=0;
         int pay_spent_index=0;
@@ -59,35 +61,50 @@ public class show_act_expense extends AppCompatActivity {
         {
             LinearLayout ll_hor = new LinearLayout(this);
             LinearLayout.LayoutParams params_lr_hor = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             );
             ll_hor.setLayoutParams(params_lr_hor);
             ll_hor.setOrientation(LinearLayout.HORIZONTAL);
 
+
             TextView frnd_name = new TextView(this);
-            frnd_name.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2));
-            frnd_name.setText(""+(String)frnd_names.get(frnd_index));
-            frnd_name.setTextSize(15);
+            frnd_name.setText((String)frnd_names.get(frnd_index));
+            LinearLayout.LayoutParams params_tv1 = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
+            );
+            frnd_name.setLayoutParams(params_tv1);
+            frnd_name.setGravity(Gravity.CENTER_HORIZONTAL);
+            frnd_name.setTextSize(20);
+            frnd_index++;
 
-            TextView frnd_pay = new TextView(this);
-            frnd_pay.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            frnd_pay.setText(""+pay_spent.get(pay_spent_index));
-            frnd_pay.setTextSize(15);
+
+            TextView paid = new TextView(this);
+            paid.setText(""+pay_spent.get(pay_spent_index));
+            LinearLayout.LayoutParams params_paid = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
+            );
+            paid.setLayoutParams(params_paid);
+            paid.setGravity(Gravity.CENTER_HORIZONTAL);
+            paid.setTextSize(20);
             pay_spent_index++;
 
-            TextView frnd_spent = new TextView(this);
-            frnd_spent.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            frnd_spent.setText(""+pay_spent.get(pay_spent_index));
-            frnd_spent.setTextSize(15);
-            pay_spent_index++;
+
+            TextView spent = new TextView(this);
+            spent.setText(""+pay_spent.get(pay_spent_index));
+            LinearLayout.LayoutParams params_spent = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
+            );
+            spent.setLayoutParams(params_spent);
+            spent.setGravity(Gravity.CENTER_HORIZONTAL);
+            spent.setTextSize(20);
+            pay_spent_index++;;
+
 
             ll_hor.addView(frnd_name);
-            ll_hor.addView(frnd_pay);
-            ll_hor.addView(frnd_spent);
+            ll_hor.addView(paid);
+            ll_hor.addView(spent);
 
             ll.addView(ll_hor);
-
-            frnd_index++;
         }
         
     }

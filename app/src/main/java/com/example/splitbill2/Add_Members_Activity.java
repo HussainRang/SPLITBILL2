@@ -24,6 +24,7 @@ public class Add_Members_Activity extends AppCompatActivity {
     DataBaseHandler dbh;
     EditText grpName;
     Intent AddMember;
+    int img_num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,7 +206,8 @@ public class Add_Members_Activity extends AppCompatActivity {
 
 
             //Enter a row in main_table and store the id
-            dbh.new_entry_MainTable(grpName.getText().toString().trim(), arrlst.size());
+            img_num = (int) (Math.random()*3);
+            dbh.new_entry_MainTable(grpName.getText().toString().trim(), arrlst.size(),img_num);
             //Toast.makeText(this,"Table Created Successfully",Toast.LENGTH_SHORT).show();
             int last_id = 0;
             //Reading last row form main_table to get_the ID
@@ -234,6 +236,7 @@ public class Add_Members_Activity extends AppCompatActivity {
             result_intent.putExtra("group_name",grpName.getText().toString().trim());
             result_intent.putExtra("Members",et_lst.size());
             result_intent.putExtra("ID",last_id);
+            result_intent.putExtra("Img_num",img_num);
             setResult(RESULT_OK,result_intent);
             finish();
         }

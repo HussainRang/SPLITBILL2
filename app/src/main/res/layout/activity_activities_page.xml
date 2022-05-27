@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities_page">
+    tools:context=".Activities_page"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/frameLayout3"
@@ -12,66 +13,36 @@
         android:layout_height="183dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="184dp"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            android:src="@color/design_default_color_secondary"
+             />
 
         <TextView
+            android:id="@+id/Grp_name_act_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Group Name"
+
             android:textSize="40sp" />
     </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="329dp"
-        android:layout_height="329dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3"
-        app:layout_constraintVertical_bias="0.346">
-
-        <LinearLayout
-            android:id="@+id/itf2_add_frames"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-    </ScrollView>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="Add_Expense_CLICKED"
-        android:text="Add Expense"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3"
-        app:layout_constraintVertical_bias="0.56" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        />
 
     <FrameLayout
-        android:layout_width="401dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="1.0">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35sp"
+        android:layout_marginRight="35sp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,12 +58,11 @@
                 android:onClick="status_pressed_activity"
                 />
 
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Activity" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    />
 
             <Button
                 android:id="@+id/button7"
@@ -104,16 +74,68 @@
         </LinearLayout>
     </FrameLayout>
 
-    <Button
-        android:id="@+id/button2"
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="329dp"
+        android:layout_height="329dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <LinearLayout
+            android:id="@+id/itf2_add_frames"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="35sp"
+        android:layout_marginRight="35sp"
+        >
+
+        <Button
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DONE"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3"
-        android:onClick="DONE_PRESSED_ACTIVITY"/>
+        android:layout_weight="1"
+        android:onClick="Add_Expense_CLICKED"
+        android:text="Add ACT."
+        />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DONE"
+            android:onClick="DONE_PRESSED_ACTIVITY"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

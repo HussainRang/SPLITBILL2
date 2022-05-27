@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.Array;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ class DataBaseHandler extends SQLiteOpenHelper {
         String CREATE_MAIN_TABLE = "CREATE TABLE IF NOT EXISTS SplitBillMain (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "tripName TEXT," +
-                "num_mem INT)";
+                "num_mem INT," +
+                "Img_num INT)";
         db.execSQL(CREATE_MAIN_TABLE);
     }
 
@@ -50,7 +52,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
     }
 
     //To add entry in MAIN TABLE
-    public void new_entry_MainTable(String TripName,int Members)
+    public void new_entry_MainTable(String TripName,int Members,int img_num)
     {
         // Instance of SQLiteDatabase use Database in writeable format
         SQLiteDatabase db = this.getWritableDatabase();
@@ -60,13 +62,38 @@ class DataBaseHandler extends SQLiteOpenHelper {
 
         ct.put("tripName",TripName);
         ct.put("num_mem",Members);
-
+        ct.put("Img_num",img_num);
         //Table name
         String Table_Name = "SplitBillMain";
         //inserting values
         db.insert(Table_Name,null,ct);
 
         db.close();
+    }
+
+    public ArrayList get_all()
+    {
+        ArrayList arr = new ArrayList();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cur = db.rawQuery("SELECT id,tripName,num_mem,Img_num FROM SplitBillMain",null);
+
+        if(cur.moveToFirst())
+        {
+            do{
+                arr.add(cur.getInt(0));
+                arr.add(cur.getString(1));
+                arr.add(cur.getInt(2));
+                arr.add(cur.getInt(3));
+
+            }while(cur.moveToNext());
+        }
+
+        cur.close();
+        db.close();
+
+        return arr;
+
     }
 
     // to get the max id of MAIN TABLE
@@ -78,13 +105,27 @@ class DataBaseHandler extends SQLiteOpenHelper {
         int final_id=0 ;
 
         if(id_cursor.moveToFirst())
+        {
             do{
                 final_id = id_cursor.getInt((0));
             }while(id_cursor.moveToNext());
+        }
 
         db.close();
         return final_id;
     }
+
+    public void delete_row(int id)
+    {
+        delete_table_friends(id);
+        delete_table_activities(id);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("SplitBillMain","id="+id,null);
+
+        db.close();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //      FOR FRIENDS TABLES      //
@@ -178,14 +219,39 @@ class DataBaseHandler extends SQLiteOpenHelper {
 
         Cursor data = db.rawQuery("Select friend_Name,Paid,Spent from friends_"+table_id,null);
 
-        int i=0;
+
         if(data.moveToFirst())
             do{
-                arr.add(data.getString((i)));
-                i++;
+                arr.add(data.getString(0));
+                arr.add(data.getInt(1));
+                arr.add(data.getInt(2));
+
             }while(data.moveToNext());
 
+            data.close();
             return arr;
+    }
+
+    public void inc_to_giver(int give_id,int settle_amt,int table_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE friends_"+table_id+
+                        " SET Paid = (Paid+"+settle_amt+") "+
+                "WHERE id="+give_id;
+
+        db.execSQL(query);
+        db.close();
+    }
+
+    public void dec_from_taker(int take_id,int settle_amt,int table_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE friends_"+table_id+
+                " SET Spent = (Spent-"+settle_amt+") "+
+                "WHERE id="+take_id;
+
+        db.execSQL(query);
+        db.close();
     }
 
     // create FRIEND table as friends_id
@@ -201,6 +267,13 @@ class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_FRIENDS_TABLE);
         new_entry_Friends_table(id,arr);
 
+        db.close();
+    }
+
+    public void delete_table_friends(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS friends_"+id);
         db.close();
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,21 +393,55 @@ class DataBaseHandler extends SQLiteOpenHelper {
         return date_time;
     }
 
-    public ArrayList send_row_activity(int table_id,int row_id)
+    public ArrayList send_row_activity(int table_id,int row_id,int num_frnd)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor id_cursor = db.rawQuery("SELECT * FROM activities_"+table_id+" WHERE id="+row_id, null);
-        db.close();
+
 
         ArrayList arr=new ArrayList();
 
         int i=3;
-        if(id_cursor.moveToFirst())
-            do{
-                arr.add(id_cursor.getString((i)));
-                i++;
-            }while(id_cursor.moveToNext());
+        int last = 2+2*num_frnd;
+        if(id_cursor.moveToFirst()) {
+            do {
+                while (i <= last) {
+                    arr.add(id_cursor.getInt(i));
+                    i++;
+                }
 
-            return arr;
+            } while (id_cursor.moveToNext());
+        }
+
+        db.close();
+        return arr;
+    }
+
+    public void delete_table_activities(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS activities_"+id);
+        db.close();
+    }
+
+    public ArrayList get_Actname_date_time(int table_id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList arr = new ArrayList();
+
+        Cursor data = db.rawQuery("SELECT id,activity_name,TIME(dtTm),DATE(dtTm) from activities_"+table_id,null);
+
+        if(data.moveToFirst())
+        {
+            do{
+                arr.add(data.getInt(0));
+                arr.add(data.getString(1));
+                arr.add(data.getString(2));
+                arr.add(data.getString(3));
+
+            }while(data.moveToNext());
+        }
+
+        return arr;
     }
 }

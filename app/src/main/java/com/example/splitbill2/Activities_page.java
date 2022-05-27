@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class Activities_page extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -28,6 +30,10 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     int max_id;
     String Date;
     String Time;
+    String Group_name;
+    DataBaseHandler dbh = new DataBaseHandler(this);
+    TextView Main_group_name;
+    LinearLayout ll_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,35 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
 
         in = getIntent();
         id = in.getIntExtra("ID",0);
+        Group_name = in.getStringExtra("Group_name");
+
+        Main_group_name = findViewById(R.id.Grp_name_act_page);
+        Main_group_name.setText(Group_name);
+        Main_group_name.setAllCaps(true);
+
+        ll_main = findViewById(R.id.itf2_add_frames);
+
+        ArrayList arrlst = dbh.get_Actname_date_time(id);
+        int i=0;
+
+        while(i<arrlst.size())
+        {
+
+            max_id=(Integer)arrlst.get(i);
+            i++;
+            activity_name=(String)arrlst.get(i);
+            i++;
+            Time = (String)arrlst.get(i);
+            i++;
+            Date = (String)arrlst.get(i);
+            i++;
+            Add_frames_of_expense();
+
+
+        }
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -82,18 +116,18 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
 
     public void Add_frames_of_expense() {
         float wt = 1;
-        LinearLayout ll_main = findViewById(R.id.itf2_add_frames);
+
 
         FrameLayout fr = new FrameLayout(this);
         FrameLayout.LayoutParams params_fr = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.FILL_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER);
-        fr.setId(max_id);
+        //fr.setId(max_id);
         fr.setLayoutParams(params_fr);
 
         LinearLayout lr_hor = new LinearLayout(this);
         LinearLayout.LayoutParams params_lr_hor = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         );
         lr_hor.setLayoutParams(params_lr_hor);
         lr_hor.setOrientation(LinearLayout.HORIZONTAL);
@@ -109,7 +143,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         ));
         tv_activity.setText(activity_name);
         tv_activity.setTextSize(20);
-        tv_activity.setTag(String.valueOf("Activity_" + max_id));
+        tv_activity.setTag((String)("Activity_" + max_id));
+        Toast.makeText(this, "TAG: Activity_"+max_id, Toast.LENGTH_SHORT).show();
 
         Space sp1 = new Space(this);
         sp1.setLayoutParams(new LinearLayout.LayoutParams(
@@ -171,7 +206,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         int row_id = view.getId();
         Toast.makeText(this, "Button ID: "+row_id, Toast.LENGTH_SHORT).show();
-        TextView act = (TextView) view.findViewWithTag("Activity_"+row_id);
+
+        TextView act = (TextView) ll_main.findViewWithTag((String)("Activity_" + row_id));
         String act_name = act.getText().toString().trim();
         Toast.makeText(this, "Activity name: "+act_name, Toast.LENGTH_SHORT).show();
 
@@ -187,6 +223,16 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     public void status_pressed_activity(View view) {
         Intent status = new Intent(this,status_from_act_page.class);
         status.putExtra("Table_id",id);
+        status.putExtra("Group_name",Group_name);
         startActivity(status);
+    }
+
+    public void Bills_pressed_activity(View view) {
+
+        Intent Bills = new Intent(this,Bills_from_act_page.class);
+        Bills.putExtra("Table_id",id);
+        Bills.putExtra("Group_name",Group_name);
+        startActivity(Bills);
+
     }
 }
