@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,12 +19,26 @@ import java.util.ArrayList;
 
 public class add_activity extends AppCompatActivity {
 
-
+    private int btn_num;
+    Button act_0;
+    Button act_1;
+    Button act_2;
+    Button act_3;
+    Button act_4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+
+        act_0 = findViewById(R.id.btn_0_status);
+        act_1 = findViewById(R.id.btn_1_status);
+        act_2 = findViewById(R.id.btn_2_status);
+        act_3 = findViewById(R.id.btn_3_status);
+        act_4 = findViewById(R.id.btn_4_status);
+
+
 
         Context context;
         context=this;
@@ -33,8 +49,8 @@ public class add_activity extends AppCompatActivity {
             act_name =(EditText) findViewById(R.id.Activity_name);
 
 
-        }catch (Exception e){
-            Toast.makeText(this, "Exception: "+e, Toast.LENGTH_SHORT).show();
+        }catch (Exception e) {
+            Toast.makeText(this, "Exception: " + e, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -49,7 +65,7 @@ public class add_activity extends AppCompatActivity {
         {
             Toast.makeText(this, "Exception: "+e, Toast.LENGTH_SHORT).show();
         }*/
-
+        btn_num=0;
         get_edit();
 
 
@@ -173,7 +189,7 @@ public class add_activity extends AppCompatActivity {
             }
 
             //enter the activity in activity table
-            dbh.add_activity_to_activity_table(table_id,friends_name,arr_et,act_name.getText().toString().trim());
+            dbh.add_activity_to_activity_table(table_id,friends_name,arr_et,act_name.getText().toString().trim(),btn_num);
 
             try {
                 //send activity name(act_name) final id of activity table time and date
@@ -184,6 +200,7 @@ public class add_activity extends AppCompatActivity {
                 result_intent.putExtra("Max_id", max_id);
                 result_intent.putExtra("Date", dbh.getDate(table_id, max_id));
                 result_intent.putExtra("Time", dbh.getTime(table_id, max_id));
+                result_intent.putExtra("Btn_num",btn_num);
                 setResult(RESULT_OK, result_intent);
                 finish();
             }catch(Exception e) {
@@ -198,4 +215,57 @@ public class add_activity extends AppCompatActivity {
     }
 
 
+    public void Btn_0_pressed(View view) {
+
+        btn_num=0;
+        act_0.setBackgroundColor(Color.parseColor("#000000"));
+        act_1.setBackgroundColor(Color.parseColor("#345345"));
+        act_2.setBackgroundColor(Color.parseColor("#345345"));
+        act_3.setBackgroundColor(Color.parseColor("#345345"));
+        act_4.setBackgroundColor(Color.parseColor("#345345"));
+    }
+
+    public void Btn_1_pressed(View view) {
+
+        btn_num=1;
+        act_0.setBackgroundColor(Color.parseColor("#345345"));
+        act_1.setBackgroundColor(Color.parseColor("#000000"));
+        act_2.setBackgroundColor(Color.parseColor("#345345"));
+        act_3.setBackgroundColor(Color.parseColor("#345345"));
+        act_4.setBackgroundColor(Color.parseColor("#345345"));
+
+    }
+
+    public void Btn_2_pressed(View view) {
+
+        btn_num=2;
+        act_0.setBackgroundColor(Color.parseColor("#345345"));
+        act_1.setBackgroundColor(Color.parseColor("#345345"));
+        act_2.setBackgroundColor(Color.parseColor("#000000"));
+        act_3.setBackgroundColor(Color.parseColor("#345345"));
+        act_4.setBackgroundColor(Color.parseColor("#345345"));
+
+    }
+
+    public void Btn_3_pressed(View view) {
+
+        btn_num=3;
+        act_0.setBackgroundColor(Color.parseColor("#345345"));
+        act_1.setBackgroundColor(Color.parseColor("#345345"));
+        act_2.setBackgroundColor(Color.parseColor("#345345"));
+        act_3.setBackgroundColor(Color.parseColor("#000000"));
+        act_4.setBackgroundColor(Color.parseColor("#345345"));
+
+    }
+
+    public void Btn_4_pressed(View view) {
+
+        btn_num=4;
+        act_0.setBackgroundColor(Color.parseColor("#345345"));
+        act_1.setBackgroundColor(Color.parseColor("#345345"));
+        act_2.setBackgroundColor(Color.parseColor("#345345"));
+        act_3.setBackgroundColor(Color.parseColor("#345345"));
+        act_4.setBackgroundColor(Color.parseColor("#000000"));
+
+    }
 }

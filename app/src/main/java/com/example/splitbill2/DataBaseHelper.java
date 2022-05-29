@@ -71,29 +71,48 @@ class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void check_exists()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String CREATE_MAIN_TABLE = "CREATE TABLE IF NOT EXISTS SplitBillMain (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "tripName TEXT," +
+                "num_mem INT," +
+                "Img_num INT)";
+        db.execSQL(CREATE_MAIN_TABLE);
+        db.close();
+
+    }
+
     public ArrayList get_all()
     {
         ArrayList arr = new ArrayList();
-        SQLiteDatabase db = this.getReadableDatabase();
+        try {
 
-        Cursor cur = db.rawQuery("SELECT id,tripName,num_mem,Img_num FROM SplitBillMain",null);
+            check_exists();
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cur = db.rawQuery("SELECT id,tripName,num_mem,Img_num FROM SplitBillMain", null);
 
-        if(cur.moveToFirst())
+            if (cur.moveToFirst()) {
+                do {
+                    arr.add(cur.getInt(0));
+                    arr.add(cur.getString(1));
+                    arr.add(cur.getInt(2));
+                    arr.add(cur.getInt(3));
+
+                } while (cur.moveToNext());
+            }
+
+            cur.close();
+            db.close();
+
+
+        }catch(Exception e)
         {
-            do{
-                arr.add(cur.getInt(0));
-                arr.add(cur.getString(1));
-                arr.add(cur.getInt(2));
-                arr.add(cur.getInt(3));
 
-            }while(cur.moveToNext());
         }
-
-        cur.close();
-        db.close();
-
         return arr;
-
     }
 
     // to get the max id of MAIN TABLE
@@ -188,11 +207,10 @@ class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor details = db.rawQuery("Select friend_Name from friends_"+id, null);
 
-        int i=0;
+
         if(details.moveToFirst())
             do{
-                arr.add(details.getString((i)));
-                i++;
+                arr.add(details.getString(0));
             }while(details.moveToNext());
 
         db.close();
@@ -247,7 +265,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE friends_"+table_id+
-                " SET Spent = (Spent-"+settle_amt+") "+
+                " SET Paid = (Paid-"+settle_amt+") "+
                 "WHERE id="+take_id;
 
         db.execSQL(query);
@@ -286,7 +304,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
         String s = "CREATE TABLE IF NOT EXISTS activities_"+id
                 +" ( id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "activity_name TEXT," +
-                "dtTm DATETIME";
+                "dtTm DATETIME,btn_num INTEGER";
 
         for(int i=0;i<arr.size();i++)
         {
@@ -309,7 +327,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void add_activity_to_activity_table(int table_id, ArrayList arr, ArrayList<EditText> ed_text, String Activity_name)
+    public void add_activity_to_activity_table(int table_id, ArrayList arr, ArrayList<EditText> ed_text, String Activity_name,int btn_num)
     {
         // Instance of SQLiteDatabase use Database in writeable format
         SQLiteDatabase db = this.getWritableDatabase();
@@ -331,6 +349,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
         Date date = new Date();
         cv.put("dtTm", dateFormat.format(date));
         cv.put("activity_name",Activity_name);
+        cv.put("btn_num",btn_num);
 
         int index_edtxt = 0;
         for(int i=0;i< arr.size();i++)
@@ -401,8 +420,8 @@ class DataBaseHandler extends SQLiteOpenHelper {
 
         ArrayList arr=new ArrayList();
 
-        int i=3;
-        int last = 2+2*num_frnd;
+        int i=4;
+        int last = 3+2*num_frnd;
         if(id_cursor.moveToFirst()) {
             do {
                 while (i <= last) {
@@ -429,7 +448,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList arr = new ArrayList();
 
-        Cursor data = db.rawQuery("SELECT id,activity_name,TIME(dtTm),DATE(dtTm) from activities_"+table_id,null);
+        Cursor data = db.rawQuery("SELECT id,activity_name,TIME(dtTm),DATE(dtTm),btn_num from activities_"+table_id,null);
 
         if(data.moveToFirst())
         {
@@ -438,6 +457,7 @@ class DataBaseHandler extends SQLiteOpenHelper {
                 arr.add(data.getString(1));
                 arr.add(data.getString(2));
                 arr.add(data.getString(3));
+                arr.add(data.getInt(4));
 
             }while(data.moveToNext());
         }

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity  {
 
         //add image view
         ImageView imgView = new ImageView(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(350, LinearLayout.LayoutParams.MATCH_PARENT);
         imgView.setLayoutParams(lp);
         String uri = "@drawable/tripimg_"+img_num;  // where myresource (without the extension) is the file
         int imageResource = getResources().getIdentifier(uri, null, getPackageName());
@@ -184,6 +185,13 @@ public class MainActivity extends AppCompatActivity  {
         tv2.setGravity(Gravity.LEFT);
         tv2.setTag("Mem_"+btn_id);
 
+        LinearLayout lr_ver_2 = new LinearLayout(this);
+        LinearLayout.LayoutParams params_lr_ver_2 = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        lr_ver_2.setLayoutParams(params_lr_ver_2);
+        lr_ver_2.setOrientation(LinearLayout.VERTICAL);
+        lr_ver_2.setTag("lr_ver_2"+btn_id);
 
         Button btn = new Button(this);
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
@@ -225,18 +233,30 @@ public class MainActivity extends AppCompatActivity  {
 
             }
         });
-        //btn.setOnClickListener(this);
+
+
+        Space sp1 = new Space(this);
+        sp1.setLayoutParams(new LinearLayout.LayoutParams(50, LinearLayout.LayoutParams.MATCH_PARENT));
+        sp1.setTag("SP1_"+btn_id);
+
+        Space sp2 = new Space(this);
+        sp2.setLayoutParams(new LinearLayout.LayoutParams(50, LinearLayout.LayoutParams.MATCH_PARENT));
+        sp2.setTag("SP2_"+btn_id);
+
 
 
         //Adding views to vertical linear layout
         lr_ver.addView(tv1);
-
         lr_ver.addView(tv2);
+
+        lr_ver_2.addView(btn);
+        lr_ver_2.addView(rem_btn);
         //Adding views to horizontal linear layout
         lr_hor.addView(imgView);
+        lr_hor.addView(sp1);
         lr_hor.addView(lr_ver);
-        lr_hor.addView(btn);
-        lr_hor.addView(rem_btn);
+        lr_hor.addView(sp2);
+        lr_hor.addView(lr_ver_2);
         //adding views to frame
         fr.addView(lr_hor);
         //adding views to scrollview
@@ -293,6 +313,9 @@ public class MainActivity extends AppCompatActivity  {
         LinearLayout vertical = (LinearLayout) ll.findViewWithTag("lr_ver_" + id);
         Button rem_btn = (Button) ll.findViewWithTag("remove_" + id);
         Button go_btn = (Button) ll.findViewWithTag("btn_" + id);
+        LinearLayout vertical2 = (LinearLayout)ll.findViewWithTag("lr_ver_2"+id);
+        Space sp1 = (Space)ll.findViewWithTag("SP1_"+id);
+        Space sp2 = (Space)ll.findViewWithTag("SP2_"+id);
         LinearLayout horizontal = (LinearLayout) ll.findViewWithTag("ll_hor_" + id);
         FrameLayout fr = (FrameLayout) ll.findViewWithTag("fr_" + id);
 
@@ -303,6 +326,9 @@ public class MainActivity extends AppCompatActivity  {
         ((ViewGroup) vertical.getParent()).removeView(vertical);
         ((ViewGroup) rem_btn.getParent()).removeView(rem_btn);
         ((ViewGroup) go_btn.getParent()).removeView(go_btn);
+        ((ViewGroup) vertical2.getParent()).removeView(vertical2);
+        ((ViewGroup) sp1.getParent()).removeView(sp1);
+        ((ViewGroup) sp2.getParent()).removeView(sp2);
         ((ViewGroup) imv.getParent()).removeView(imv);
         ((ViewGroup) horizontal.getParent()).removeView(horizontal);
         ((ViewGroup) fr.getParent()).removeView(fr);

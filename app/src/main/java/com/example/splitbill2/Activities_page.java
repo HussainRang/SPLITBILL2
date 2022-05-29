@@ -6,11 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
@@ -24,7 +26,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
 
 
     Intent in;
-
+    private int btn_num;
     private int id;
     String activity_name;
     int max_id;
@@ -64,6 +66,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
             i++;
             Date = (String)arrlst.get(i);
             i++;
+            btn_num=(Integer)arrlst.get(i);
+            i++;
             Add_frames_of_expense();
 
 
@@ -85,7 +89,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
                 Date = data.getStringExtra("Date");
                 Time = data.getStringExtra("Time");
                 max_id = data.getIntExtra("Max_id",0);
-
+                btn_num = data.getIntExtra("Btn_num",0);
                 Add_frames_of_expense();
             }
             if(resultCode==RESULT_CANCELED)
@@ -125,12 +129,38 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         //fr.setId(max_id);
         fr.setLayoutParams(params_fr);
 
+        //image view
+        ImageView imgView = new ImageView(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, LinearLayout.LayoutParams.MATCH_PARENT);
+        imgView.setLayoutParams(lp);
+        String uri = "@drawable/acct_"+btn_num;  // where myresource (without the extension) is the file
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        imgView.setImageDrawable(res);
+
+
         LinearLayout lr_hor = new LinearLayout(this);
         LinearLayout.LayoutParams params_lr_hor = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         );
         lr_hor.setLayoutParams(params_lr_hor);
         lr_hor.setOrientation(LinearLayout.HORIZONTAL);
+
+
+        LinearLayout ll_ver = new LinearLayout(this);
+        LinearLayout.LayoutParams params_lr_ver = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
+        );
+        ll_ver.setLayoutParams(params_lr_ver);
+        ll_ver.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout lr_hor_child = new LinearLayout(this);
+        LinearLayout.LayoutParams params_lr_hor_chlid = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        lr_hor_child.setLayoutParams(params_lr_hor_chlid);
+        lr_hor_child.setOrientation(LinearLayout.HORIZONTAL);
+
 
         Space sp0 = new Space(this);
         sp0.setLayoutParams(new LinearLayout.LayoutParams(
@@ -146,10 +176,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         tv_activity.setTag((String)("Activity_" + max_id));
         Toast.makeText(this, "TAG: Activity_"+max_id, Toast.LENGTH_SHORT).show();
 
-        Space sp1 = new Space(this);
-        sp1.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, wt
-        ));
+
+
 
         TextView tv_date = new TextView(this);
         tv_date.setLayoutParams(new LinearLayout.LayoutParams(
@@ -160,7 +188,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
 
         Space sp2 = new Space(this);
         sp2.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, wt
+                25, LinearLayout.LayoutParams.MATCH_PARENT
         ));
 
         TextView tv_time = new TextView(this);
@@ -170,10 +198,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         tv_time.setText(Time);
         tv_time.setTextSize(15);
 
-        Space sp3 = new Space(this);
-        sp3.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, wt
-        ));
+
 
         Space sp4 = new Space(this);
         sp4.setLayoutParams(new LinearLayout.LayoutParams(
@@ -187,13 +212,18 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         show_act_details.setId(max_id);
         show_act_details.setOnClickListener(this);
 
+        lr_hor.addView(imgView);
         lr_hor.addView(sp0);
-        lr_hor.addView(tv_activity);
-        lr_hor.addView(sp1);
-        lr_hor.addView(tv_date);
-        lr_hor.addView(sp2);
-        lr_hor.addView(tv_time);
-        lr_hor.addView(sp3);
+
+        ll_ver.addView(tv_activity);
+
+        lr_hor_child.addView(tv_date);
+        lr_hor_child.addView(sp2);
+        lr_hor_child.addView(tv_time);
+        ll_ver.addView(lr_hor_child);
+        lr_hor.addView(ll_ver);
+
+
         lr_hor.addView(show_act_details);
 
         fr.addView(lr_hor);

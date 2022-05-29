@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -113,13 +114,14 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
     {
         int start=0;
         int last=diff.size()-1;
-
+        int num_frames=0;
         while(start<last)
         {
             if( Math.abs(diff.get(start)) > Math.abs(diff.get(last)) )
             {
                 String s = ""+names.get(last)+" gives "+Math.abs(diff.get(last))+" to "+names.get(start);
-                make_frame(s,id.get(last),id.get(start),Math.abs(diff.get(last)) );
+                make_frame(s,id.get(last),id.get(start),Math.abs(diff.get(last)),num_frames );
+                num_frames++;
                 diff.set(start,diff.get(start)+diff.get(last));
                 diff.set(last,0);
 
@@ -130,7 +132,8 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
             else if( Math.abs(diff.get(start)) < Math.abs(diff.get(last)) )
             {
                 String s = ""+names.get(last)+" gives "+Math.abs(diff.get(start))+" to "+names.get(start);
-                make_frame(s,id.get(last),id.get(start),Math.abs(diff.get(start)));
+                make_frame(s,id.get(last),id.get(start),Math.abs(diff.get(start)),num_frames);
+                num_frames++;
                 diff.set(start,0);
                 diff.set(last,diff.get(last)+diff.get(start));
 
@@ -140,7 +143,8 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
             else if(Math.abs(diff.get(start)) == Math.abs(diff.get(last)) && Math.abs(diff.get(start))!=0 && Math.abs(diff.get(last))!=0 )
             {
                 String s = ""+names.get(last)+" gives "+Math.abs(diff.get(last))+" to "+names.get(start);
-                make_frame(s,id.get(last),id.get(start),Math.abs(diff.get(last)));
+                make_frame(s,id.get(last),id.get(start),Math.abs(diff.get(last)),num_frames);
+                num_frames++;
                 diff.set(start,0);
                 diff.set(last,0);
 
@@ -151,14 +155,15 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
     }
 
 
-    private void make_frame(String s,int id_gives,int id_takes,int settle_amt)
+    private void make_frame(String s,int id_gives,int id_takes,int settle_amt,int num_frames)
     {
         LinearLayout ll_hor = new LinearLayout(this);
         LinearLayout.LayoutParams params_lr_hor = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         );
         ll_hor.setLayoutParams(params_lr_hor);
-        ll.setOrientation(LinearLayout.HORIZONTAL);
+        ll_hor.setOrientation(LinearLayout.HORIZONTAL);
+        ll_hor.setTag("ll_hor_"+num_frames);
 
         TextView show_to_settle = new TextView(this);
         LinearLayout.LayoutParams params_tv1 = new LinearLayout.LayoutParams(
@@ -168,6 +173,7 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
         show_to_settle.setLayoutParams(params_tv1);
         show_to_settle.setText(s);
         show_to_settle.setTextSize(15);
+        show_to_settle.setTag("tv_"+num_frames);
 
         Button settle_up = new Button(this);
         LinearLayout.LayoutParams btn = new LinearLayout.LayoutParams(
@@ -177,7 +183,7 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
         settle_up.setLayoutParams(btn);
         settle_up.setText("SETTLE UP");
         settle_up.setOnClickListener(this);
-        settle_up.setTag(id_gives+"_"+id_takes+"_"+settle_amt);
+        settle_up.setTag(id_gives+"_"+id_takes+"_"+settle_amt+"_"+num_frames);
 
         ll_hor.addView(show_to_settle);
         ll_hor.addView(settle_up);
@@ -205,15 +211,32 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
         }
         i++;
         int settle_amt=0;
-        while(i!=tag.length())
+        while(tag.charAt(i)!='_')
         {
             settle_amt = settle_amt*10 + (tag.charAt(i)-'0');
             i++;
         }
-        Toast.makeText(this, "Giver ID: "+give_id+"  Taker ID: "+take_id+" Settle Amount: "+settle_amt, Toast.LENGTH_SHORT).show();
+        i++;
+        int fr_number=0;
+        while(i!=tag.length())
+        {
+            fr_number = fr_number*10 + (tag.charAt(i)-'0');
+            i++;
+        }
+        Toast.makeText(this, "Giver ID: "+give_id+"  Taker ID: "+take_id+" Settle Amount: "+settle_amt+" Fr_num: "+fr_number, Toast.LENGTH_SHORT).show();
         dbh.inc_to_giver(give_id,settle_amt,Table_id);
         dbh.dec_from_taker(take_id,settle_amt,Table_id);
         Toast.makeText(this, "FRIENDS TABLE UPDATED!!!!", Toast.LENGTH_SHORT).show();
+
+        Button settle_btn = (Button) ll.findViewWithTag(""+give_id+"_"+take_id+"_"+settle_amt+"_"+fr_number);
+        TextView info = (TextView) ll.findViewWithTag("tv_"+fr_number);
+        LinearLayout horizontal = (LinearLayout) ll.findViewWithTag("ll_hor_"+fr_number);
+
+        ((ViewGroup) settle_btn.getParent()).removeView(settle_btn);
+        ((ViewGroup) info.getParent()).removeView(info);
+        ((ViewGroup) horizontal.getParent()).removeView(horizontal);
+
+        Toast.makeText(this, "SETTLE SUCCESSFUL!!!", Toast.LENGTH_SHORT).show();
     }
 
     public void Done_pressed_from_Bills(View view) {
