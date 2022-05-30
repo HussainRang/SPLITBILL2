@@ -3,6 +3,7 @@ package com.example.splitbill2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -52,6 +53,7 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
     protected void onStart() {
         super.onStart();
 
+        Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
         create_to_pay();
     }
 
@@ -78,6 +80,9 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
                     difference.set(j-1,diff2);
                     difference.set(j,diff1);
                 }
+
+                else
+                    continue;
             }
         }
     }
@@ -105,8 +110,24 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
             i=i+2;
         }
 
-        sort_by_diff(names,id,difference);
-        main_algo(names,id,difference);
+        Boolean ret=true;
+        for(int m=0;m< difference.size();m++)
+        {
+            if(difference.get(m)!=0)
+                ret=false;
+        }
+
+        if(ret==true)
+        {
+            Toast.makeText(this, "YOU ALL ARE SETTLED UP!!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else
+        {
+            sort_by_diff(names,id,difference);
+            main_algo(names,id,difference);
+        }
+
     }
 
 
@@ -170,6 +191,7 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,4
         );
+        show_to_settle.setTextColor(Color.parseColor("#000000"));
         show_to_settle.setLayoutParams(params_tv1);
         show_to_settle.setText(s);
         show_to_settle.setTextSize(15);

@@ -3,6 +3,8 @@ package com.example.splitbill2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -72,6 +74,8 @@ public class show_act_expense extends AppCompatActivity {
             LinearLayout.LayoutParams params_tv1 = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
             );
+            frnd_name.setTextColor(Color.parseColor("#000000"));
+            frnd_name. setTypeface(null, Typeface. BOLD_ITALIC);
             frnd_name.setLayoutParams(params_tv1);
             frnd_name.setGravity(Gravity.CENTER_HORIZONTAL);
             frnd_name.setTextSize(20);
@@ -83,6 +87,7 @@ public class show_act_expense extends AppCompatActivity {
             LinearLayout.LayoutParams params_paid = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
             );
+            paid.setTextColor(Color.parseColor("#000000"));
             paid.setLayoutParams(params_paid);
             paid.setGravity(Gravity.CENTER_HORIZONTAL);
             paid.setTextSize(20);
@@ -94,6 +99,7 @@ public class show_act_expense extends AppCompatActivity {
             LinearLayout.LayoutParams params_spent = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1
             );
+            spent.setTextColor(Color.parseColor("#000000"));
             spent.setLayoutParams(params_spent);
             spent.setGravity(Gravity.CENTER_HORIZONTAL);
             spent.setTextSize(20);

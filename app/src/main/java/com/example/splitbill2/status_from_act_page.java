@@ -3,6 +3,8 @@ package com.example.splitbill2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -67,21 +69,25 @@ public class status_from_act_page extends AppCompatActivity {
             frnd_name.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2));
             frnd_name.setText(""+(String)data.get(i));
             frnd_name.setGravity(Gravity.CENTER_HORIZONTAL);
-            frnd_name.setTextSize(15);
+            frnd_name. setTypeface(null, Typeface. BOLD_ITALIC);
+            frnd_name.setTextSize(20);
+            frnd_name.setTextColor(Color.parseColor("#000000"));
             i++;
 
             TextView frnd_pay = new TextView(this);
             frnd_pay.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             frnd_pay.setText(""+data.get(i));
             frnd_pay.setGravity(Gravity.CENTER_HORIZONTAL);
-            frnd_pay.setTextSize(15);
+            frnd_pay.setTextSize(20);
+            frnd_pay.setTextColor(Color.parseColor("#000000"));
             i++;
 
             TextView frnd_spent = new TextView(this);
             frnd_spent.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             frnd_spent.setText(""+data.get(i));
             frnd_spent.setGravity(Gravity.CENTER_HORIZONTAL);
-            frnd_spent.setTextSize(15);
+            frnd_spent.setTextColor(Color.parseColor("#000000"));
+            frnd_spent.setTextSize(20);
             i++;
 
             ll_hor.addView(frnd_name);

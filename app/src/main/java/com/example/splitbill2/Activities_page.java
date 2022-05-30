@@ -6,10 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,6 +39,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     DataBaseHandler dbh = new DataBaseHandler(this);
     TextView Main_group_name;
     LinearLayout ll_main;
+    int border_true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         Main_group_name.setAllCaps(true);
 
         ll_main = findViewById(R.id.itf2_add_frames);
-
+        border_true=-1;
         ArrayList arrlst = dbh.get_Actname_date_time(id);
         int i=0;
 
@@ -68,7 +72,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
             i++;
             btn_num=(Integer)arrlst.get(i);
             i++;
-            Add_frames_of_expense();
+            border_true++;
+            Add_frames_of_expense(border_true);
 
 
         }
@@ -90,7 +95,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
                 Time = data.getStringExtra("Time");
                 max_id = data.getIntExtra("Max_id",0);
                 btn_num = data.getIntExtra("Btn_num",0);
-                Add_frames_of_expense();
+                border_true++;
+                Add_frames_of_expense(border_true);
             }
             if(resultCode==RESULT_CANCELED)
             {
@@ -118,7 +124,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void Add_frames_of_expense() {
+    public void Add_frames_of_expense(int border_true) {
         float wt = 1;
 
 
@@ -172,7 +178,9 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1
         ));
         tv_activity.setText(activity_name);
-        tv_activity.setTextSize(20);
+        tv_activity.setTextSize(30);
+        tv_activity. setTypeface(null, Typeface. BOLD_ITALIC);
+        tv_activity.setTextColor(Color.parseColor("#000000"));
         tv_activity.setTag((String)("Activity_" + max_id));
         Toast.makeText(this, "TAG: Activity_"+max_id, Toast.LENGTH_SHORT).show();
 
@@ -183,6 +191,7 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         tv_date.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1
         ));
+        tv_date.setTextColor(Color.parseColor("#000000"));
         tv_date.setText(Date);
         tv_date.setTextSize(15);
 
@@ -195,9 +204,17 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         tv_time.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1
         ));
+        tv_time.setTextColor(Color.parseColor("#000000"));
         tv_time.setText(Time);
         tv_time.setTextSize(15);
 
+        View border = new View(this);
+        LinearLayout.LayoutParams params_border = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 10
+        );
+        params_border.gravity = Gravity.BOTTOM;
+        border.setLayoutParams(params_border);
+        border.setBackgroundColor(Color.parseColor("#000000"));
 
 
         Space sp4 = new Space(this);
@@ -227,6 +244,8 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
         lr_hor.addView(show_act_details);
 
         fr.addView(lr_hor);
+        if(border_true!=0)
+        fr.addView((border));
 
         ll_main.addView(fr);
     }
