@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -90,7 +91,7 @@ public class Add_Members_Activity extends AppCompatActivity {
         //Creating edit text
         EditText et = new EditText(this);
         et.setGravity(Gravity.LEFT);
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
         et.setLayoutParams(p);
         et.setHint("Member Name");
         //Adding EditText to et_lst
@@ -120,7 +121,10 @@ public class Add_Members_Activity extends AppCompatActivity {
         btn.setId(id);
         id++;
         //Setting background colour as red for button
-        btn.setBackgroundColor(getResources().getColor(android.R.color.black));
+        btn.setBackgroundColor(Color.parseColor("#FF0000"));
+        btn.setTextColor(Color.parseColor("#000000"));
+        btn.setTextSize(20);
+        btn. setTypeface(null, Typeface. BOLD);
         //Setting orientation to right
         btn.setGravity(Gravity.CENTER);
         //setting layout params

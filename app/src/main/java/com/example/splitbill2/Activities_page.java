@@ -222,12 +222,26 @@ public class Activities_page extends AppCompatActivity implements View.OnClickLi
                 LinearLayout.LayoutParams.MATCH_PARENT, 20
         ));
 
+
+
         Button show_act_details = new Button(this);
-        show_act_details.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        show_act_details.setText("-->");
+        LinearLayout.LayoutParams params_show_act_details = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 100);
+        params_show_act_details.topMargin=33;
+        show_act_details.setLayoutParams(params_show_act_details);
+        show_act_details.setText("GO");
         show_act_details.setGravity(Gravity.RIGHT);
+        show_act_details.setGravity(Gravity.CENTER_HORIZONTAL);
+
+
+        //show_act_details.setBackgroundResource(R.drawable.select_btn);
+        show_act_details.setBackgroundColor(Color.parseColor("#00e700"));
+        show_act_details.setTextColor(Color.parseColor("#FFFFFF"));
+        show_act_details.setTextSize(15);
         show_act_details.setId(max_id);
         show_act_details.setOnClickListener(this);
+
+
+
 
         lr_hor.addView(imgView);
         lr_hor.addView(sp0);

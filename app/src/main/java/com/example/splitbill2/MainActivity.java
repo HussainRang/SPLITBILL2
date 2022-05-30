@@ -203,10 +203,17 @@ public class MainActivity extends AppCompatActivity  {
         lr_ver_2.setOrientation(LinearLayout.VERTICAL);
         lr_ver_2.setTag("lr_ver_2"+btn_id);
 
+
         Button btn = new Button(this);
         btn.setLayoutParams(new LinearLayout.LayoutParams(200,100,1));
-        btn.setText("->");
-        btn.setGravity(Gravity.RIGHT);
+        btn.setText("GO");
+        //btn.setBackgroundResource(R.drawable.select_btn);
+
+        btn.setBackgroundColor(Color.parseColor("#00e700"));
+        btn.setTextColor(Color.parseColor("#FFFFFF"));
+        btn.setTextSize(15);
+        btn.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+
         btn.setId(btn_id);
         //btn.setBackgroundResource(R.drawable.select_btn);
         btn.setTag("btn_"+btn_id);
@@ -222,12 +229,16 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+
         Button rem_btn = new Button(this);
         rem_btn.setLayoutParams(new LinearLayout.LayoutParams(200,100,1));
-        rem_btn.setText("DEL");
-        rem_btn.setGravity(Gravity.RIGHT);
+        rem_btn.setText("REM.");
         rem_btn.setTag("remove_"+btn_id);
-        //btn.setBackgroundResource(R.drawable.remove_btn);
+        rem_btn.setBackgroundColor(Color.parseColor("#FF0000"));
+        rem_btn.setTextColor(Color.parseColor("#FFFFFF"));
+        rem_btn.setTextSize(15);
+
+        //rem_btn.setBackgroundResource(R.drawable.remove_btn);
         rem_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,6 +270,10 @@ public class MainActivity extends AppCompatActivity  {
         sp_top.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 30));
         sp_top.setTag("SPTop_"+btn_id);
 
+        Space between_btns = new Space(this);
+        between_btns.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,1));
+        between_btns.setTag("SPbetbtn_"+btn_id);
+
         View border = new View(this);
         border.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -279,6 +294,7 @@ public class MainActivity extends AppCompatActivity  {
         lr_ver.addView(tv2);
 
         lr_ver_2.addView(btn);
+        lr_ver_2.addView(between_btns);
         lr_ver_2.addView(rem_btn);
         //Adding views to horizontal linear layout
         lr_hor.addView(imgView);
@@ -346,6 +362,7 @@ public class MainActivity extends AppCompatActivity  {
         ImageView imv = (ImageView)ll.findViewWithTag("img_"+id);
         LinearLayout vertical = (LinearLayout) ll.findViewWithTag("lr_ver_" + id);
         Button rem_btn = (Button) ll.findViewWithTag("remove_" + id);
+        Space bet_btn = (Space) ll.findViewWithTag("SPbetbtn_"+id);
         Button go_btn = (Button) ll.findViewWithTag("btn_" + id);
         LinearLayout vertical2 = (LinearLayout)ll.findViewWithTag("lr_ver_2"+id);
         Space sp1 = (Space)ll.findViewWithTag("SP1_"+id);
@@ -361,6 +378,7 @@ public class MainActivity extends AppCompatActivity  {
         ((ViewGroup) trip.getParent()).removeView(trip);
         ((ViewGroup) vertical.getParent()).removeView(vertical);
         ((ViewGroup) rem_btn.getParent()).removeView(rem_btn);
+        ((ViewGroup) bet_btn.getParent()).removeView(bet_btn);
         ((ViewGroup) go_btn.getParent()).removeView(go_btn);
         ((ViewGroup) vertical2.getParent()).removeView(vertical2);
         ((ViewGroup) sp1.getParent()).removeView(sp1);
