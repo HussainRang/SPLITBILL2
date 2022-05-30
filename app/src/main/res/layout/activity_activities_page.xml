@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities_page"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#E8F9FD">
 
     <FrameLayout
         android:id="@+id/frameLayout3"

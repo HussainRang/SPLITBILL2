@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -94,6 +95,8 @@ public class Add_Members_Activity extends AppCompatActivity {
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
         et.setLayoutParams(p);
         et.setHint("Member Name");
+        et.setTextColor(Color.parseColor("#000000"));
+        et.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
         //Adding EditText to et_lst
         et_lst.add(et);
         et.setId(id);

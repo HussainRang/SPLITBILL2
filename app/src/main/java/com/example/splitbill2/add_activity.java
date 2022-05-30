@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -114,6 +115,8 @@ public class add_activity extends AppCompatActivity {
             EditText et_paid = new EditText(this);
             et_paid.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             et_paid.setText("0");
+            et_paid.setTextColor(Color.parseColor("#000000"));
+            et_paid.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
             et_paid.setInputType(InputType.TYPE_CLASS_NUMBER);
             //ll.addView(et_paid);
             arr_et.add(et_paid);
@@ -121,6 +124,8 @@ public class add_activity extends AppCompatActivity {
             EditText et_spent = new EditText(this);
             et_spent.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
             et_spent.setText("0");
+            et_spent.setTextColor(Color.parseColor("#000000"));
+            et_spent.getBackground().mutate().setColorFilter(getResources().getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP);
             et_spent.setInputType(InputType.TYPE_CLASS_NUMBER);
             //ll_hor.addView(et_paid);
             arr_et.add(et_spent);
@@ -218,54 +223,54 @@ public class add_activity extends AppCompatActivity {
     public void Btn_0_pressed(View view) {
 
         btn_num=0;
-        act_0.setBackgroundColor(Color.parseColor("#000000"));
-        act_1.setBackgroundColor(Color.parseColor("#345345"));
-        act_2.setBackgroundColor(Color.parseColor("#345345"));
-        act_3.setBackgroundColor(Color.parseColor("#345345"));
-        act_4.setBackgroundColor(Color.parseColor("#345345"));
+        act_0.setBackgroundColor(Color.parseColor("#4361ee"));
+        act_1.setBackgroundColor(Color.parseColor("#028090"));
+        act_2.setBackgroundColor(Color.parseColor("#028090"));
+        act_3.setBackgroundColor(Color.parseColor("#028090"));
+        act_4.setBackgroundColor(Color.parseColor("#028090"));
     }
 
     public void Btn_1_pressed(View view) {
 
         btn_num=1;
-        act_0.setBackgroundColor(Color.parseColor("#345345"));
-        act_1.setBackgroundColor(Color.parseColor("#000000"));
-        act_2.setBackgroundColor(Color.parseColor("#345345"));
-        act_3.setBackgroundColor(Color.parseColor("#345345"));
-        act_4.setBackgroundColor(Color.parseColor("#345345"));
+        act_0.setBackgroundColor(Color.parseColor("#028090"));
+        act_1.setBackgroundColor(Color.parseColor("#4361ee"));
+        act_2.setBackgroundColor(Color.parseColor("#028090"));
+        act_3.setBackgroundColor(Color.parseColor("#028090"));
+        act_4.setBackgroundColor(Color.parseColor("#028090"));
 
     }
 
     public void Btn_2_pressed(View view) {
 
         btn_num=2;
-        act_0.setBackgroundColor(Color.parseColor("#345345"));
-        act_1.setBackgroundColor(Color.parseColor("#345345"));
-        act_2.setBackgroundColor(Color.parseColor("#000000"));
-        act_3.setBackgroundColor(Color.parseColor("#345345"));
-        act_4.setBackgroundColor(Color.parseColor("#345345"));
+        act_0.setBackgroundColor(Color.parseColor("#028090"));
+        act_1.setBackgroundColor(Color.parseColor("#028090"));
+        act_2.setBackgroundColor(Color.parseColor("#4361ee"));
+        act_3.setBackgroundColor(Color.parseColor("#028090"));
+        act_4.setBackgroundColor(Color.parseColor("#028090"));
 
     }
 
     public void Btn_3_pressed(View view) {
 
         btn_num=3;
-        act_0.setBackgroundColor(Color.parseColor("#345345"));
-        act_1.setBackgroundColor(Color.parseColor("#345345"));
-        act_2.setBackgroundColor(Color.parseColor("#345345"));
-        act_3.setBackgroundColor(Color.parseColor("#000000"));
-        act_4.setBackgroundColor(Color.parseColor("#345345"));
+        act_0.setBackgroundColor(Color.parseColor("#028090"));
+        act_1.setBackgroundColor(Color.parseColor("#028090"));
+        act_2.setBackgroundColor(Color.parseColor("#028090"));
+        act_3.setBackgroundColor(Color.parseColor("#4361ee"));
+        act_4.setBackgroundColor(Color.parseColor("#028090"));
 
     }
 
     public void Btn_4_pressed(View view) {
 
         btn_num=4;
-        act_0.setBackgroundColor(Color.parseColor("#345345"));
-        act_1.setBackgroundColor(Color.parseColor("#345345"));
-        act_2.setBackgroundColor(Color.parseColor("#345345"));
-        act_3.setBackgroundColor(Color.parseColor("#345345"));
-        act_4.setBackgroundColor(Color.parseColor("#000000"));
+        act_0.setBackgroundColor(Color.parseColor("#028090"));
+        act_1.setBackgroundColor(Color.parseColor("#028090"));
+        act_2.setBackgroundColor(Color.parseColor("#028090"));
+        act_3.setBackgroundColor(Color.parseColor("#028090"));
+        act_4.setBackgroundColor(Color.parseColor("#4361ee"));
 
     }
 }

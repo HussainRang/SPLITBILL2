@@ -6,7 +6,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/splitbill_icon"
-        android:label="@string/app_name"
+        android:label="SPLITBILL"
         android:roundIcon="@drawable/splitbill_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.SPLITBILL2">

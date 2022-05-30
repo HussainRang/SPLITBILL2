@@ -246,8 +246,8 @@ public class MainActivity extends AppCompatActivity  {
                 int i=7;
                 int id=0;
                 while(i!=tg.length())
-                {
-                    id = id*10+(tg.charAt(i)-'0');
+                {       //23   remove_203
+                    id = id*10+(tg.charAt(i)-'0');    //0*10+2=2 2*10+0=20 20*10+3=203
                     i++;
                 }
                 Toast.makeText(MainActivity.this, "ID: "+id+" BTN_ID: "+btn_id, Toast.LENGTH_SHORT).show();
@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity  {
         LinearLayout vertical2 = (LinearLayout)ll.findViewWithTag("lr_ver_2"+id);
         Space sp1 = (Space)ll.findViewWithTag("SP1_"+id);
         Space sp2 = (Space)ll.findViewWithTag("SP2_"+id);
-        Space bdr = (Space)ll.findViewWithTag("Border_"+id);
+        View bdr = (View)ll.findViewWithTag("Border_"+id);
         Space top = (Space)ll.findViewWithTag("SPTop_"+id);
         LinearLayout horizontal = (LinearLayout) ll.findViewWithTag("ll_hor_" + id);
         FrameLayout fr = (FrameLayout) ll.findViewWithTag("fr_" + id);

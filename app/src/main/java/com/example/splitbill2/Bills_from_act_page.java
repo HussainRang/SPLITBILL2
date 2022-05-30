@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -119,6 +122,16 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
 
         if(ret==true)
         {
+            TextView all_settled = new TextView(this);
+            all_settled.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            all_settled.setText("YOU ARE ALL SETTELED !!!!");
+            all_settled. setTypeface(null, Typeface. BOLD);
+            all_settled.setTextColor(Color.parseColor("#000000"));
+            all_settled.setTextSize(45);
+            all_settled.setGravity(Gravity.CENTER);
+            ll.addView(all_settled);
+
+
             Toast.makeText(this, "YOU ALL ARE SETTLED UP!!!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -194,7 +207,8 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
         show_to_settle.setTextColor(Color.parseColor("#000000"));
         show_to_settle.setLayoutParams(params_tv1);
         show_to_settle.setText(s);
-        show_to_settle.setTextSize(15);
+        show_to_settle.setTextSize(25);
+        show_to_settle. setTypeface(null, Typeface. BOLD);
         show_to_settle.setTag("tv_"+num_frames);
 
         Button settle_up = new Button(this);
@@ -203,13 +217,20 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
                 LinearLayout.LayoutParams.WRAP_CONTENT,1
         );
         settle_up.setLayoutParams(btn);
+        settle_up.setBackgroundColor(Color.parseColor("#00e700"));
+        settle_up.setTextColor(Color.parseColor("#FFFFFF"));
         settle_up.setText("SETTLE UP");
         settle_up.setOnClickListener(this);
         settle_up.setTag(id_gives+"_"+id_takes+"_"+settle_amt+"_"+num_frames);
 
+        Space sp = new Space(this);
+        sp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 25));
+        sp.setTag("SP_"+num_frames);
+
         ll_hor.addView(show_to_settle);
         ll_hor.addView(settle_up);
         ll.addView(ll_hor);
+        ll.addView(sp);
     }
 
     @Override
@@ -253,10 +274,12 @@ public class Bills_from_act_page extends AppCompatActivity implements View.OnCli
         Button settle_btn = (Button) ll.findViewWithTag(""+give_id+"_"+take_id+"_"+settle_amt+"_"+fr_number);
         TextView info = (TextView) ll.findViewWithTag("tv_"+fr_number);
         LinearLayout horizontal = (LinearLayout) ll.findViewWithTag("ll_hor_"+fr_number);
+        Space sp = (Space)ll.findViewWithTag("SP_"+fr_number);
 
         ((ViewGroup) settle_btn.getParent()).removeView(settle_btn);
         ((ViewGroup) info.getParent()).removeView(info);
         ((ViewGroup) horizontal.getParent()).removeView(horizontal);
+        ((ViewGroup) sp.getParent()).removeView(sp);
 
         Toast.makeText(this, "SETTLE SUCCESSFUL!!!", Toast.LENGTH_SHORT).show();
     }
