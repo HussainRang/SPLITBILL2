@@ -6,25 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".Bills_from_act_page"
     android:orientation="vertical"
+    android:background="#E8F9FD"
     >
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="25sp"
-
-        />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
+        android:layout_margin="10sp"
         >
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
             android:layout_height="184dp"
-            app:srcCompat="@color/design_default_color_secondary" />
+            app:srcCompat="@drawable/logo_bg"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"/>
 
         <TextView
             android:id="@+id/Group_name_Bills_page"
@@ -32,20 +29,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Group Name"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"/>
 
     </FrameLayout>
 
-    <Space
+    <View
         android:layout_width="match_parent"
-        android:layout_height="35sp"
+        android:layout_height="2dp"
+        android:background="#2155CD"
         />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
+        android:layout_margin="10sp"
         android:layout_weight="1"
         >
 
@@ -57,9 +56,10 @@
 
     </ScrollView>
 
-    <Space
+    <View
         android:layout_width="match_parent"
-        android:layout_height="20sp"
+        android:layout_height="2dp"
+        android:background="#2155CD"
         />
 
     <LinearLayout
@@ -75,6 +75,9 @@
             android:text="Done"
             android:layout_gravity="center_horizontal"
             android:onClick="Done_pressed_from_Bills"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:backgroundTint="#0AA1DD"
             />
 
     </LinearLayout>

@@ -5,31 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Add_Members_Activity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#E8F9FD">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Group Name: "
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:text="Group Name: "
+            android:textSize="30dp"
+             />
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:id="@+id/grp_Name"
             />
 
@@ -44,8 +46,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
-        android:background="@color/design_default_color_primary"
-        android:textColor="@color/cardview_light_background"
+        android:background="#2155CD"
+        android:textColor="#ffffff"
         />
     <ScrollView
         android:layout_width="match_parent"
@@ -53,7 +55,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/scrollView1">
+        android:id="@+id/scrollView1"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +83,9 @@
             android:textAlignment="center"
             android:id="@+id/add_members"
             android:onClick="ADD_MEMBER_button_click"
-
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:backgroundTint="#0AA1DD"
             />
 
         <Space
@@ -98,6 +103,9 @@
             android:text="DONE"
             android:textAlignment="center"
             android:onClick="DONE_CLICKED"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:backgroundTint="#0AA1DD"
             />
     </LinearLayout>
 
